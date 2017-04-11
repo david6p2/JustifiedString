@@ -3,11 +3,9 @@
 import UIKit
 
 // Problem:
-// Given a String of n characteres, return a string of k desired characters by inserting evenly spaces between words
+// Given a String of n characters, return a string of k desired characters by inserting evenly spaces between words
 
 func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> String {
-	
-	
 	// lenght of the current string
 	let currentLenght = currentString.characters.underestimatedCount
 	// lenght of current string - required string
@@ -40,13 +38,11 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 			concatenatedString += " "
 			diferenceWithRequired -= 1
 		}
-		
 	}
 	//Don't forget to add the last word
 	concatenatedString += words[words.count-1]
 	
 	return concatenatedString
-	
 }
 
 var stringName = justifyString("pepa perez cruz tas", requiredLenght: 30)
