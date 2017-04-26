@@ -19,7 +19,7 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 	// Divide the string by words
 	// ex: david and mike, will be 3 words, 2 places to insert spaces
 	let words = currentString.components(separatedBy: " ")
-  //If # of words is 1, return the only word adding the # of missing characters as spaces
+	//If # of words is 1, return the only word adding the # of missing characters as spaces
 	if words.count == 1 {
 		return currentString + String(repeating: " ", count: missingCharacters)
 	}
@@ -63,7 +63,7 @@ class MyTests : XCTestCase {
     }
     
     func testPepaPerezExample() {
-        var justString = justifyString("pepa perez cruz tas", requiredLenght: 30)
+        let justString = justifyString("pepa perez cruz tas", requiredLenght: 30)
         XCTAssert(justString == "pepa     perez     cruz    tas")
     }
     
@@ -73,19 +73,19 @@ class MyTests : XCTestCase {
     }
     
     func testTwoWords() {
-        var justString = justifyString("a b", requiredLenght: 3)
+        let justString = justifyString("a b", requiredLenght: 3)
         XCTAssert(justString == "a b")
     }
     
     func testTwoWordsLengthFive() {
-        var justString = justifyString("a b", requiredLenght: 5)
+        let justString = justifyString("a b", requiredLenght: 5)
         XCTAssert(justString == "a   b")
     }
 }
 
 class PlaygroundTestObserver : NSObject, XCTestObservation {
-    @objc func testCase(testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: UInt) {
-        print("Test failed on line \(lineNumber): \(testCase.name), \(description)")
+    @objc func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: UInt) {
+        print("Test failed on line \(lineNumber): \(testCase.name ?? "NO NAME FOR TEST CASE"), \(description)")
     }
 }
 
