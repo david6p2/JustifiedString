@@ -21,7 +21,12 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 	let words = currentString.components(separatedBy: " ")
 	
 	// Count the number of words, and divide the numbers of missing Characters in the number of words - 1 (missingCharacters / words - 1)
-	let numberOfSpaces = missingCharacters/(words.count - 1)
+    var numberOfSpaces = 1
+    // Check if more than one word
+    if words.count > 1 {
+        numberOfSpaces = missingCharacters/(words.count - 1)
+    }
+	
 	
 	let spaces = String(repeating: " ", count: numberOfSpaces+1)
 	
@@ -48,3 +53,60 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 var stringName = justifyString("pepa perez cruz tas", requiredLenght: 30)
 print(stringName)
 print(stringName.characters.count)
+
+
+import XCTest
+
+class MyTests : XCTestCase {
+    
+    func testJustifiedStringLenght() {
+        var justString = justifyString("string a", requiredLenght: 30)
+        XCTAssert(justString.characters.count == 30)
+    }
+    
+    func testPepaPerezExample() {
+        var justString = justifyString("pepa perez cruz tas", requiredLenght: 30)
+        XCTAssert(justString == "pepa     perez     cruz    tas")
+    }
+    
+    func testOneWord() {
+        var justString = justifyString("string", requiredLenght: 30)
+        XCTAssert(justString.characters.count == 30)
+    }
+    
+    func testTwoWords() {
+        var justString = justifyString("a b", requiredLenght: 3)
+        XCTAssert(justString == "a b")
+    }
+    
+    func testTwoWordsLengthFive() {
+        var justString = justifyString("a b", requiredLenght: 5)
+        XCTAssert(justString == "a   b")
+    }
+}
+
+class PlaygroundTestObserver : NSObject, XCTestObservation {
+    @objc func testCase(testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: UInt) {
+        print("Test failed on line \(lineNumber): \(testCase.name), \(description)")
+    }
+}
+
+let observer = PlaygroundTestObserver()
+let center = XCTestObservationCenter.shared()
+center.addTestObserver(observer)
+
+struct TestRunner {
+    
+    func runTests(testClass:AnyClass) {
+        print("Running test suite \(testClass)")
+        
+        let tests = testClass as! XCTestCase.Type
+        let testSuite = tests.defaultTestSuite()
+        testSuite.run()
+        let run = testSuite.testRun as! XCTestSuiteRun
+        
+        print("Ran \(run.executionCount) tests in \(run.testDuration)s with \(run.totalFailureCount) failures")
+    }
+}
+
+TestRunner().runTests(testClass:MyTests.self)
