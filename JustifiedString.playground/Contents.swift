@@ -19,14 +19,12 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 	// Divide the string by words
 	// ex: david and mike, will be 3 words, 2 places to insert spaces
 	let words = currentString.components(separatedBy: " ")
-	
-	// Count the number of words, and divide the numbers of missing Characters in the number of words - 1 (missingCharacters / words - 1)
-    var numberOfSpaces = 1
-    // Check if more than one word
-    if words.count > 1 {
-        numberOfSpaces = missingCharacters/(words.count - 1)
-    }
-	
+  //If # of words is 1, return the only word adding the # of missing characters as spaces
+	if words.count == 1 {
+		return currentString + String(repeating: " ", count: missingCharacters)
+	}
+	// Count the number of words, and divide the numbers of missing Characters in the number of words - 1 (missingCharacters / words - 1).
+	let numberOfSpaces = missingCharacters/(words.count - 1)
 	
 	let spaces = String(repeating: " ", count: numberOfSpaces+1)
 	
@@ -36,7 +34,7 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 	//Concatenate String with new number of spaces
 	var concatenatedString = ""
 	
-	for i in 0..<(words.count-1) {
+	for i in 0..<(words.count - 1) {
 		concatenatedString += words[i] + spaces
 		//If there will be missing charactes, insert them evenly from left to right until there are not characters left
 		if (diferenceWithRequired > 0){
@@ -53,7 +51,7 @@ func justifyString(_ currentString:String, requiredLenght lenghtReq:Int) -> Stri
 var stringName = justifyString("pepa perez cruz tas", requiredLenght: 30)
 print(stringName)
 print(stringName.characters.count)
-
+assert(stringName.characters.count==30, "String doesn't end up with the required lenght")
 
 import XCTest
 
